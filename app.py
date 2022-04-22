@@ -9,7 +9,7 @@ from MemeEngine import MemeEngine
 
 app = Flask(__name__)
 
-meme = MemeEngine('./tmp')
+meme = MemeEngine('./static')
 
 #%%
 def setup():
@@ -73,17 +73,16 @@ def meme_post():
     #    file and the body and author form paramaters.
     # 3. Remove the temporary saved image.
 
-    img = "./temp_image.jpg"
-    image_url = request.form.get("image_url")
-    img_data = requests.get(image_url, stream=True).content
-    with open(img, "wb") as f:
-        f.write(img_data)
-
-    body = request.form.get("body", "")
-    author = request.form.get("author", "")
-    path = meme.make_meme(img, body, author)
-    print(path)
-    os.remove(img)
+    path_tmp_image = './tmp/mytempIMG.jpg'
+    image_url = request.form['Image URL']
+    print(image_url)
+    img_content = requests.get(image_url, stream=True).content
+    with open(path_tmp_image, 'wb') as img:
+        img.write(img_content)
+        
+    quote_body = request.form['Quote Body']
+    quote_author = request.form['Quote Author']        
+    path = meme.make_meme(img, quote_body, quote_author, width=500)
 
     return render_template('meme.html', path=path)
 

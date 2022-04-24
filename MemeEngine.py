@@ -10,8 +10,8 @@ import random
 
 class MemeEngine():
     
-    def __init__(self, path_tmp):
-        self.path_tmp = path_tmp  # what should be the path here??
+    def __init__(self, path_static):
+        self.path_static = path_static  
     
     
     def make_meme(self, img_path, text, author, width=500) -> str:        
@@ -34,6 +34,10 @@ class MemeEngine():
             draw.text((30, text_position), message, font=font, fill='white')
             
             img_name = img_path.split('/')[-1]
-            path_img_out = f'{self.path_tmp}/{img_name}'
+            # img_name = img_name.split('.')
+            # img_name = img_name[0] + '_' + \
+            #     str(random.choice(range(0,100000))) + '.' + img_name[-1]
+            path_img_out = f'{self.path_static}/{img_name}'
             im.save(path_img_out)
+            
             return path_img_out  # img_out is the path to the manipulated image

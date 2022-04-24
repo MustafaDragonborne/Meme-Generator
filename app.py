@@ -74,15 +74,23 @@ def meme_post():
     # 3. Remove the temporary saved image.
 
     path_tmp_image = './tmp/mytempIMG.jpg'
-    image_url = request.form['Image URL']
+    
+    # with app.test_request_context():
+    #      image_url = request.form['Image URL']   
+        
+    image_url = request.form['image_url']
+    # image_url = 'https://cdn.gettotext.com/deutsch/wp-content/uploads/2021/09/Wie-Jiraiya-in-Naruto-Shippuden-stirbt-und-welche-Episode-es.jpg'
     print(image_url)
     img_content = requests.get(image_url, stream=True).content
-    with open(path_tmp_image, 'wb') as img:
-        img.write(img_content)
+    with open(path_tmp_image, 'wb') as f:
+        f.write(img_content)
         
-    quote_body = request.form['Quote Body']
-    quote_author = request.form['Quote Author']        
-    path = meme.make_meme(img, quote_body, quote_author, width=500)
+    body = request.form['body']
+    author = request.form['author']    
+    
+    path = meme.make_meme(path_tmp_image, body, author, width=200)
+    print(path)
+    os.remove(path_tmp_image)
 
     return render_template('meme.html', path=path)
 

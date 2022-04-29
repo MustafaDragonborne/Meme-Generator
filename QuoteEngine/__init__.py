@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+"""Relative imports."""
 
 from .QuoteModel import QuoteModel
 from .IngestorInterface import IngestorInterface

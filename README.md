@@ -14,7 +14,7 @@ The application can interact with a variety of files with complex filetypes like
 
 The CLI tool is developed inside the meme.py file and can be run on Anaconda Prompt using the command:
 
-python meme.py
+´´´python meme.py´´´
 
 This command generates a random meme by taking a random image from "./_data/photos/dog/" and a random quote from "./_data/DogQuotes/" and overlays the quote on the image.
 Furthermore, it can take in three optional arguments. These are --body, --author and --path which correspond to a user-specified quote body, quote author and image path.

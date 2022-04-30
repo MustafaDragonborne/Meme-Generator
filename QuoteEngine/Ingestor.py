@@ -23,7 +23,7 @@ class Ingestor(IngestorInterface):
         """Return a list of QuoteModel objects.
 
         This class method takes in the path of a file which needs to be
-        ingested and parses it to create a list of QuoteModel objects from
+        ingested, parses it and returns a list of QuoteModel objects from
         its contents.
         """
         for ingestor in cls.ingestors:

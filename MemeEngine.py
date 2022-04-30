@@ -1,6 +1,7 @@
 """Responsible for manipulating and drawing text onto images."""
 
 from PIL import Image, ImageDraw, ImageFont
+import textwrap
 import numpy as np
 import random
 
@@ -39,6 +40,7 @@ class MemeEngine():
             font_size = int(np.ceil(im.width * img_fraction))
             font = ImageFont.truetype('./font/LilitaOne-Regular.ttf',
                                       size=font_size)
+            text = textwrap.fill(text, width=20)
             message = f'{text} \n - {author}'
             text_position = random.choice(range(30, height - 100))
             draw.text((30, text_position), message, font=font, fill='white')

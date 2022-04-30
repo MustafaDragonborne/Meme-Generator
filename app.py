@@ -16,10 +16,16 @@ meme = MemeEngine('./static')
 # %%
 def setup():
     """Load all resources."""
-    quote_files = ['./_data/DogQuotes/DogQuotesTXT.txt',
-                   './_data/DogQuotes/DogQuotesDOCX.docx',
-                   './_data/DogQuotes/DogQuotesPDF.pdf',
-                   './_data/DogQuotes/DogQuotesCSV.csv']
+    quotes_dir = './_data/DogQuotes'
+    quote_files = list(os.walk(quotes_dir))[0][2]
+    quote_files = [f'{quotes_dir}/{f}' for f in quote_files]
+
+    # Check the list of files for any incompatible filetype and raise an
+    # exception if the directory contains one.
+    allowed_extensions = ['csv', 'docx', 'pdf', 'txt']
+    for f in quote_files:
+        if f.split('.')[-1] not in allowed_extensions:
+            raise Exception(f'{f.split("/")[-1]} is an incompatible file')
 
     # Use the Ingestor class to parse all files in the quote_files variable
     quotes = []
@@ -63,21 +69,27 @@ def meme_form():
 def meme_post():
     """Create a user defined meme."""
     path_tmp_image = './tmp/mytempIMG.jpg'
-
     image_url = request.form['image_url']
     print(image_url)
-    img_content = requests.get(image_url, stream=True).content
-    with open(path_tmp_image, 'wb') as f:
-        f.write(img_content)
 
-    body = request.form['body']
-    author = request.form['author']
+    try:
+        img_content = requests.get(image_url, stream=True).content
+    except requests.exceptions.ConnectionError:
+        print("Oops! Could not generate meme")
+        # return "Invalid Image URL"
+        return render_template('meme_error.html')
+    else:
+        with open(path_tmp_image, 'wb') as f:
+            f.write(img_content)
 
-    path = meme.make_meme(path_tmp_image, body, author, width=200)
-    print(path)
-    os.remove(path_tmp_image)
+        body = request.form['body']
+        author = request.form['author']
 
-    return render_template('meme.html', path=path)
+        path = meme.make_meme(path_tmp_image, body, author, width=200)
+        print(path)
+        os.remove(path_tmp_image)
+
+        return render_template('meme.html', path=path)
 
 
 if __name__ == "__main__":

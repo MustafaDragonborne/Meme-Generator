@@ -29,7 +29,7 @@ The CLI interface returns the path of the new manipulated image.
 ### Flask App
 A basic flask server is designed in app.py that will consume the modules and make them usable through a web interface. This enables the user to generate memes through the web browser. In order to setup the server on a machine running Windows, use the following commands on the command line:
 
-set FLASK_APP=app.py
+set FLASK_APP=app.py \n
 flask run --host 0.0.0.0 --port 3000 --reload
 
 The server allows the user to generate memes using two options:

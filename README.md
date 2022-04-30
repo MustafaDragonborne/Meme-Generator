@@ -20,7 +20,7 @@ This command generates a random meme by taking a random image from "./_data/phot
 Furthermore, it can take in three optional arguments. These are --body, --author and --path which correspond to a user-specified quote body, quote author and image path.
 For example, if the original image path intended by the user is "./_data/photos/dog/xander_1.jpg", the quote body is "My Quote Body" and the quote author is "My Quote Author", then meme.py can be run on the command line using the following command:
 
-python meme.py --body "My Quote Body" --author "My Quote Author" --path "./_data/photos/dog/xander_1.jpg"
+```python meme.py --body "My Quote Body" --author "My Quote Author" --path "./_data/photos/dog/xander_1.jpg"```
 
 If the --body argument is specified, then an --author argument has to be specified too, otherwise an Exception is raised.
 
@@ -29,8 +29,8 @@ The CLI interface returns the path of the new manipulated image.
 ### Flask App
 A basic flask server is designed in app.py that will consume the modules and make them usable through a web interface. This enables the user to generate memes through the web browser. In order to setup the server on a machine running Windows, use the following commands on the command line:
 
-set FLASK_APP=app.py \n
-flask run --host 0.0.0.0 --port 3000 --reload
+```set FLASK_APP=app.py
+flask run --host 0.0.0.0 --port 3000 --reload```
 
 The server allows the user to generate memes using two options:
 - Generate memes using random images in "./_data/photos/dog/" and random quotes in "./_data/DogQuotes/"
